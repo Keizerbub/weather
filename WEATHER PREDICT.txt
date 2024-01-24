@@ -1,0 +1,80 @@
+WEATHER PREDICT
+
+
+PLANNIFICATION DU DEROULEMENT DU PROJET
+
+
+I- COLLECTE & STOCKAGE
+
+Search :
+* API 
+* Dataset existing
+
+
+II- Stockage
+Format : JSON ou CSV
+Type : Mango DB ou Cloud
+
+
+III- Traitement
+Fusion de toutes les datas en un seul dataset 
+- Script
+- Finalité interface
+
+
+IV- Modèle
+
+* Collecte
+* Modification
+* Test
+
+
+V- Deployement
+Utilisation d’une interface API
+
+
+VI- Test API
+
+
+
+
+
+OUTILS PAR ETAPES 
+
+ 
+I- COLLECTE & STOCKAGE
+
+* API (Webscrapping, Python,…)
+
+* Site :
+Raggel
+Data Gouv
+INSEE
+Open Data
+GitHub
+Hugging Face
+
+II- TRAITEMENT
+
+* PySpark
+* Excel
+Script (code détaillé spécifiée)
+
+* Stockage on Github &PC
+
+
+TIME ESTIMATION
+
+I- Collect (2 séances)
+
+II- Traitement (4 séances)
+
+III- Model (2 séances)
+
+IV- Deploiement (2 séances)
+
+V- Test ( 1 séance)
+
+Total = 11 séances 
+
+Début : 30 Janvier 2024
