@@ -1,3 +1,7 @@
 La différence entre la prédiction météo classique et celle faite avec le machine learning, 
 se situe dans le faite que la prédiction classique se fait à base de la résolution des équation de la mécanique des fluides atmosphériques 
 alors que celle basé sur le machine learning marche sur la prédiction des données précédentes.
+- Une autre différence est le fait que la résolution des équation de la mécanique des fluides nécessite beaucoup de ressources et de temps
+alors que avec le machine learning, la prédiction est rapide.
+- les models de prédiction de météo sont excellent sur 72h, puis acceptable sur 1 semaine jusqu'à 15 jours, mais au-delà de 15 jours, 
+les résultats ne sont plus réellement cohérent.
