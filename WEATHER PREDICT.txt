@@ -48,7 +48,7 @@ I- COLLECTE & STOCKAGE
 * API (Webscrapping, Python,…)
 
 * Site :
-Raggel
+kaggel
 Data Gouv
 INSEE
 Open Data
