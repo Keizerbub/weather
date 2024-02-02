@@ -8,10 +8,14 @@ import os
 import gzip
 import shutil
 
+
+################################################################
+"""a class dedicated to the scrapping of the weather document"""
 class Scraping:
     def __init__(self, url, info: bool):
         self.url = url
         self.info = info
+
 
     """Getting links from the government API function"""
     def get_links(self):
@@ -70,28 +74,35 @@ class Scraping:
             print("---Success: True---\n")
             return result
 
+
     """Open links function"""
     def open_url(self, urls):
         # Initialize the WebDriver (assuming you are using Chrome)
         driver = webdriver.Chrome()
         try:
+            i=0
             # Loop through the list of URLs
             for url in urls:
                 # Open the URL in the browser
                 driver.get(url)
                 t.sleep(1)
                 # Optionally, you can add a delay to give the page time to load
-                # driver.implicitly_wait(10)  # Waits for 10 seconds (adjust as needed)
-
+                # driver.implicitly_wait(1)  # Waits for 1 seconds (adjust as needed)
+                #to have a traceback
+                i=i+1
+                if(i % 10)==0:
+                    print(f"link number {i} opened")
+                    
         except Exception as e:
             print(f"An error occurred: {e}")
 
         finally:
             # Close the browser window
             driver.quit()
-
-
-
+            
+            
+################################################################
+"a class dedicated to the handlng of the zipped folder and file"
 class AggregationDataset:
     def __init__(self):
         pass
@@ -104,6 +115,7 @@ class AggregationDataset:
                 all_files.append(os.path.join(root, file))
         return all_files
 
+
     """Find the file and move it to another directory"""
     def decompress_and_move(self, input_gz_file, output_folder):
         with gzip.open(input_gz_file, 'rb') as f_in:
@@ -113,6 +125,7 @@ class AggregationDataset:
 
             with open(output_file, 'wb') as f_out:
                 shutil.copyfileobj(f_in, f_out)
+
 
     """Merge all CSV files into a single CSV file"""
     def combine_csv_files(self, input_folder, output_file):
