@@ -129,7 +129,11 @@ class AggregationDataset:
 
     """Merge all CSV files into a single CSV file"""
     def combine_csv_files(self, input_folder, output_file):
-        all_files = self.get_all_files_in_directory(input_folder)
+        if type(input_folder) != list :
+            all_files = self.get_all_files_in_directory(input_folder)
+        else:
+            all_files=input_folder
+            
         # Initialize an empty DataFrame
         combined_df = pd.DataFrame()
 
@@ -140,3 +144,4 @@ class AggregationDataset:
 
         # Write the combined DataFrame to a CSV file
         combined_df.to_csv(output_file, index=False)
+
