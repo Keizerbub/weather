@@ -191,7 +191,7 @@ class AggregationDataset:
                     valeurs_absolues = self.extraire_valeurs_absolues(fichier)
                     
                     # Vérifier si la valeur absolue maximale est inférieure à 2000
-                    if valeurs_absolues < 2000:
+                    if valeurs_absolues < year:
                         # Supprimer le fichier
                         os.remove(fichier)
                         print(f"file remove : {fichier}")
@@ -204,7 +204,7 @@ class AggregationDataset:
                 valeurs_absolues = self.extraire_valeurs_absolues(repertoire)
                 
                 # Vérifier si la valeur absolue maximale est inférieure à 2000
-                if valeurs_absolues < 2000:
+                if valeurs_absolues < year:
                     # Supprimer le fichier
                     os.remove(repertoire)
                     print(f"file remove : {repertoire}")
