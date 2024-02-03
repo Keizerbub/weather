@@ -7,7 +7,7 @@ from selenium import webdriver
 import os
 import gzip
 import shutil
-
+import re
 
 ################################################################
 """a class dedicated to the scrapping of the weather document"""
@@ -144,4 +144,70 @@ class AggregationDataset:
 
         # Write the combined DataFrame to a CSV file
         combined_df.to_csv(output_file, index=False)
+
+
+    """getting year of dataset"""
+    def extraire_valeurs_absolues(self,texte):
+        # Utiliser une expression régulière pour trouver tous les nombres positifs dans le texte
+        number = re.findall(r'\b\d+\.\d+|\b\d+\b', texte)
+        
+        # Convertir les chaînes de caractères en nombres (float) et prendre la valeur absolue
+        absolute_v = [abs(float(number)) for number in number]
+        
+        #return the max of the number
+        return max(absolute_v, default=0)
+
+    
+    """removing non-consitent datase below year<2000"""
+    def delete_file(self,directory:bool,repertoire,year:int):
+        
+        if directory==True:
+            # Récupérer la liste des fichiers dans le répertoire
+            fichiers = os.listdir(repertoire)
+
+            # Parcourir tous les fichiers du répertoire
+            for fichier in fichiers:
+                #file path
+                chemin_fichier = os.path.join(repertoire, fichier)
+                
+                # Vérifier si le fichier existe et est un fichier régulier
+                if os.path.isfile(chemin_fichier):
+                    # Extraire les valeurs absolues des nombres dans le chemin du fichier
+                    valeurs_absolues = self.extraire_valeurs_absolues(chemin_fichier)
+                    
+                    # Vérifier si la valeur absolue maximale est inférieure à 2000
+                    if valeurs_absolues < year:
+                        # Supprimer le fichier
+                        os.remove(chemin_fichier)
+                        print(f"file remove : {chemin_fichier}")
+        
+        
+        elif directory ==True and type(repertoire)==list:
+            
+            for fichier in repertoire:         
+                # Vérifier si le fichier existe et est un fichier régulier
+                if os.path.isfile(fichier):
+                    # Extraire les valeurs absolues des nombres dans le chemin du fichier
+                    valeurs_absolues = self.extraire_valeurs_absolues(fichier)
+                    
+                    # Vérifier si la valeur absolue maximale est inférieure à 2000
+                    if valeurs_absolues < 2000:
+                        # Supprimer le fichier
+                        os.remove(fichier)
+                        print(f"file remove : {fichier}")
+    
+    
+        elif directory == False:
+            
+            if os.path.isfile(repertoire):
+                # Extraire les valeurs absolues des nombres dans le chemin du fichier
+                valeurs_absolues = self.extraire_valeurs_absolues(repertoire)
+                
+                # Vérifier si la valeur absolue maximale est inférieure à 2000
+                if valeurs_absolues < 2000:
+                    # Supprimer le fichier
+                    os.remove(repertoire)
+                    print(f"file remove : {repertoire}")
+        
+
 
