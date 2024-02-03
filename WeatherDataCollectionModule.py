@@ -147,7 +147,7 @@ class AggregationDataset:
 
 
     """getting year of dataset"""
-    def extraire_valeurs_absolues(self,texte):
+    def absolute_extract(self,texte):
         # Utiliser une expression régulière pour trouver tous les nombres positifs dans le texte
         number = re.findall(r'\b\d+\.\d+|\b\d+\b', texte)
         
@@ -173,7 +173,7 @@ class AggregationDataset:
                 # Vérifier si le fichier existe et est un fichier régulier
                 if os.path.isfile(chemin_fichier):
                     # Extraire les valeurs absolues des nombres dans le chemin du fichier
-                    valeurs_absolues = self.extraire_valeurs_absolues(chemin_fichier)
+                    valeurs_absolues = self.absolute_extracte(chemin_fichier)
                     
                     # Vérifier si la valeur absolue maximale est inférieure à 2000
                     if valeurs_absolues < year:
@@ -188,7 +188,7 @@ class AggregationDataset:
                 # Vérifier si le fichier existe et est un fichier régulier
                 if os.path.isfile(fichier):
                     # Extraire les valeurs absolues des nombres dans le chemin du fichier
-                    valeurs_absolues = self.extraire_valeurs_absolues(fichier)
+                    valeurs_absolues = self.absolute_extracte(fichier)
                     
                     # Vérifier si la valeur absolue maximale est inférieure à 2000
                     if valeurs_absolues < year:
@@ -201,7 +201,7 @@ class AggregationDataset:
             
             if os.path.isfile(repertoire):
                 # Extraire les valeurs absolues des nombres dans le chemin du fichier
-                valeurs_absolues = self.extraire_valeurs_absolues(repertoire)
+                valeurs_absolues = self.absolute_extracte(repertoire)
                 
                 # Vérifier si la valeur absolue maximale est inférieure à 2000
                 if valeurs_absolues < year:
