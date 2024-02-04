@@ -2,6 +2,7 @@ from WeatherDataCollectionModule import Scraping as sc
 from WeatherDataCollectionModule import AggregationDataset as ag
 import time 
 
+
 ################################################################
 """part1: Scraping"""
 #-stocking links
@@ -23,8 +24,16 @@ import time
 #scrap=sc(url,info=False)
 #scrap.open_url(temp_links)
 
-################################################################
-"""part3:gathering all csv in one file"""
+
+#################################################################
+"""part3: deleting zipped folders which year below 2000"""
+#zip_folder=ag()
+#repository=r"C:\Users\Regis Likassi\Documents\AIVANCITY\3e année\clinique IA\weather\zipped_folder"
+#zip_folder.delete_file(directory=True, repertoire=repository, year=2000)
+
+
+#################################################################
+"""part4:gathering all csv in one file"""
 #--paths
 #---folder where are stock our zipped folder
 repository=r"C:\Users\Regis Likassi\Documents\AIVANCITY\3e année\clinique IA\weather\zipped_folder"
@@ -36,18 +45,20 @@ final_directory=r"C:\Users\Regis Likassi\Documents\AIVANCITY\3e année\clinique 
 #-instanciation
 folder=ag()
 #--getting all file of zipped folder
-folder_name=folder.get_all_files_in_directory(directory=repository)
+folder_name=folder.get_all_files_in_directory(directory=out_directory)
 print('\n---success::1---')
 
 #--getting all file of zipped folder
-start_time = time.time()
-for file in folder_name:
-    folder.decompress_and_move(file,out_directory)
-    if time.time() - start_time >= 5:
-        current_time = time.strftime("%H:%M:%S", time.localtime())
-        print(f"Temps actuel : {current_time}")
-        start_time = time.time()
-print('\n---success::2---')
+#start_time = time.time()
+#for file in folder_name:
+#    folder.decompress_and_move(file,out_directory)
+#    if time.time() - start_time >= 5:
+#        current_time = time.strftime("%H:%M:%S", time.localtime())
+#        print(f"Temps actuel : {current_time}")
+#        start_time = time.time()
+#print('\n---success::2---')
+
+
 
 #--combining all file into 1
 folder.combine_csv_files(input_folder=folder_name,output_file=final_directory)
