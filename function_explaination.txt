@@ -1,1 +1,103 @@
+1. Scraping Class
+__init__(self, url, info: bool)
+Parameters:
 
+url: URL of the government API.
+info: Boolean flag to print additional information during scraping.
+Functionality:
+
+Initializes the Scraping object with the provided URL and information flag.
+This constructor sets up the basic attributes needed for the scraping process.
+get_links(self)
+Parameters:
+
+None
+Return Value:
+
+List of links
+Functionality:
+
+Accesses the government API URL using a user-agent to retrieve the HTML content.
+Parses the HTML content to extract the API results in JSON format.
+Navigates through the JSON data to obtain a list of links.
+open_url(self, urls)
+Parameters:
+
+urls: List of URLs
+Return Value:
+
+Opens URLs in a browser window
+Functionality:
+
+Initializes a Chrome WebDriver.
+Iterates through the provided list of URLs, opening each one in the browser.
+Provides a traceback for every 10th link opened.
+Closes the browser window after processing all URLs.
+2. AggregationDataset Class
+__init__(self)
+Parameters:
+
+None
+Functionality:
+
+Initializes the AggregationDataset object.
+This constructor sets up the basic attributes needed for handling zipped folders and files.
+get_all_files_in_directory(self, directory)
+Parameters:
+
+directory: Path to a directory
+Return Value:
+
+List of file names in the directory
+Functionality:
+
+Recursively retrieves all file names in the specified directory, including files in subdirectories.
+decompress_and_move(self, input_gz_file, output_folder)
+Parameters:
+
+input_gz_file: Gzipped file path
+output_folder: Output folder path
+Return Value:
+
+Decompresses and moves files
+Functionality:
+
+Opens a gzipped file, decompresses it, and moves the decompressed file to the specified output folder.
+combine_csv_files(self, input_folder, output_file)
+Parameters:
+
+input_folder: List of CSV files or path to a directory
+output_file: Path to the output CSV file
+Return Value:
+
+Combines CSV files into a single file
+Functionality:
+
+Reads each CSV file from the provided list or directory.
+Concatenates them into a single DataFrame.
+Writes the combined DataFrame to a specified output CSV file.
+absolute_extract(self, texte)
+Parameters:
+
+texte: Text containing numbers
+Return Value:
+
+Maximum absolute value of the numbers
+Functionality:
+
+Extracts numbers from the given text using a regular expression.
+Converts the extracted numbers to absolute values.
+Returns the maximum absolute value.
+delete_file(self, directory, repertoire, year)
+Parameters:
+
+directory: Boolean for directory deletion
+repertoire: Directory path or list of file paths
+year: Minimum year
+Return Value:
+
+Deletes files or directories older than the specified year
+Functionality:
+
+Deletes files or directories below the specified year.
+Provides flexibility for deleting either a single file, a list of files, or entire directories.
