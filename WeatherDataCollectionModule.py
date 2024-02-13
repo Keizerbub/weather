@@ -3,7 +3,6 @@ from urllib.request import urlopen as ur, Request as re  # for HTTP manipulation
 import pandas as pd  # for data frame manipulation
 import time as t  # for pauses
 import json
-from selenium import webdriver
 import os
 import gzip
 import shutil
@@ -101,6 +100,7 @@ class Scraping:
             driver.quit()
             
             
+            
 ################################################################
 "a class dedicated to the handlng of the zipped folder and file"
 class AggregationDataset:
@@ -147,7 +147,7 @@ class AggregationDataset:
 
 
     """getting year of dataset"""
-    def absolute_extract(self,texte):
+    def extraire_valeurs_absolues(self,texte):
         # Utiliser une expression régulière pour trouver tous les nombres positifs dans le texte
         number = re.findall(r'\b\d+\.\d+|\b\d+\b', texte)
         
@@ -173,7 +173,7 @@ class AggregationDataset:
                 # Vérifier si le fichier existe et est un fichier régulier
                 if os.path.isfile(chemin_fichier):
                     # Extraire les valeurs absolues des nombres dans le chemin du fichier
-                    valeurs_absolues = self.absolute_extracte(chemin_fichier)
+                    valeurs_absolues = self.extraire_valeurs_absolues(chemin_fichier)
                     
                     # Vérifier si la valeur absolue maximale est inférieure à 2000
                     if valeurs_absolues < year:
@@ -188,10 +188,10 @@ class AggregationDataset:
                 # Vérifier si le fichier existe et est un fichier régulier
                 if os.path.isfile(fichier):
                     # Extraire les valeurs absolues des nombres dans le chemin du fichier
-                    valeurs_absolues = self.absolute_extracte(fichier)
+                    valeurs_absolues = self.extraire_valeurs_absolues(fichier)
                     
                     # Vérifier si la valeur absolue maximale est inférieure à 2000
-                    if valeurs_absolues < year:
+                    if valeurs_absolues < 2000:
                         # Supprimer le fichier
                         os.remove(fichier)
                         print(f"file remove : {fichier}")
@@ -201,13 +201,59 @@ class AggregationDataset:
             
             if os.path.isfile(repertoire):
                 # Extraire les valeurs absolues des nombres dans le chemin du fichier
-                valeurs_absolues = self.absolute_extracte(repertoire)
+                valeurs_absolues = self.extraire_valeurs_absolues(repertoire)
                 
                 # Vérifier si la valeur absolue maximale est inférieure à 2000
-                if valeurs_absolues < year:
+                if valeurs_absolues < 2000:
                     # Supprimer le fichier
                     os.remove(repertoire)
                     print(f"file remove : {repertoire}")
-        
 
+
+    def decompress_move_and_delete_zip(self, input_zip_folder, output_folder):
+            # Liste des fichiers zip dans le dossier
+            zip_files = [f for f in os.listdir(input_zip_folder) if f.endswith('.gz')]
+            
+            # Créer le dossier 'final_departement'
+            final_departement_folder = os.path.join(output_folder, 'final_departement')
+            os.makedirs(final_departement_folder, exist_ok=True)
+            
+            # Dictionnaire pour stocker les DataFrames par préfixe de nom de fichier
+            file_dict = {}
+            
+            # Parcourir chaque fichier zip
+            for zip_file in zip_files:
+                # Chemin complet du fichier zip
+                zip_file_path = os.path.join(input_zip_folder, zip_file)
+                
+                # Extraire le contenu du fichier zip dans le dossier de sortie
+                self.decompress_and_move(zip_file_path, output_folder)
+                
+                # Supprimer le fichier zip après extraction
+                os.remove(zip_file_path)
+                print(f"Zip file removed: {zip_file_path}")
+                
+            # Liste des fichiers CSV dans le dossier d'extraction
+            extracted_files = [f for f in os.listdir(output_folder) if f.endswith('.csv')]
+            
+            # Parcourir chaque fichier CSV
+            for csv_file in extracted_files:
+                # Récupérer le préfixe du nom de fichier (4 ou 5 premiers caractères)
+                prefix = csv_file[:5]
+                
+                # Vérifier si le préfixe existe déjà dans le dictionnaire
+                if prefix in file_dict:
+                    # Lire le fichier CSV et concaténer avec le DataFrame existant dans le dictionnaire
+                    df = pd.read_csv(os.path.join(output_folder, csv_file))
+                    file_dict[prefix] = pd.concat([file_dict[prefix], df], ignore_index=True)
+                else:
+                    # Ajouter le DataFrame dans le dictionnaire
+                    file_dict[prefix] = pd.read_csv(os.path.join(output_folder, csv_file))
+            
+            # Écrire chaque DataFrame dans un fichier CSV séparé dans le dossier final_departement
+            for prefix, df in file_dict.items():
+                output_file_path = os.path.join(final_departement_folder, f"{prefix}_combined.csv")
+                df.to_csv(output_file_path, index=False)
+                print(f"Combined CSV file created: {output_file_path}")
+##############################################################################################
 
