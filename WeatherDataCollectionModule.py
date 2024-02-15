@@ -246,6 +246,10 @@ class AggregationDataset:
                     # Lire le fichier CSV et concaténer avec le DataFrame existant dans le dictionnaire
                     df = pd.read_csv(os.path.join(output_folder, csv_file))
                     file_dict[prefix] = pd.concat([file_dict[prefix], df], ignore_index=True)
+                    
+                    #delete file
+                    os.remove(os.path.join(output_folder, csv_file))
+                    print('file deleted')
                 else:
                     # Ajouter le DataFrame dans le dictionnaire
                     file_dict[prefix] = pd.read_csv(os.path.join(output_folder, csv_file))
