@@ -249,10 +249,12 @@ class AggregationDataset:
                     
                     #delete file
                     os.remove(os.path.join(output_folder, csv_file))
-                    print('file deleted')
+                    print("file deleted: ",os.path.join(output_folder, csv_file))
                 else:
                     # Ajouter le DataFrame dans le dictionnaire
                     file_dict[prefix] = pd.read_csv(os.path.join(output_folder, csv_file))
+                    os.remove(os.path.join(output_folder, csv_file))
+                    print("file deleted: ",os.path.join(output_folder, csv_file))
             
             # Écrire chaque DataFrame dans un fichier CSV séparé dans le dossier final_departement
             for prefix, df in file_dict.items():
